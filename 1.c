@@ -60,14 +60,11 @@ int execute(char** subcommand,int position)
         else
         {
 		int bg=0;
+		if(strcmp(subcommand[position-1],"&")==0) bg=1;
                 pid_t pid = fork();
                 if(pid==0)
                 {
-			if(strcmp(subcommand[position-1],"&")==0)
-			{
-				bg=1;
-				subcommand[position-1]='\0';
-			}
+			if(bg==1) subcommand[position-1]='\0';
 			execvp(subcommand[0], subcommand);
                         return 1;
                 }
